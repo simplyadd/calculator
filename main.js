@@ -1,8 +1,9 @@
-var two_nums = [];
-var operator = "";
-var temp_num = "";		// temporary placeholder for number
-var flag_new = true;	// flags beginning of new number
-var eq_count = 0;			// consecutive "=" button clicks
+let two_nums = [];
+let operator = "";
+let temp_num = "";		// temporary placeholder for number
+let eq_count = 0;			// consecutive "=" button clicks
+let flag_dec = false;	// flags for decimal point in number
+let flag_new = true;	// flags beginning of new number
 
 const btns = document.querySelectorAll("button")
 const screen = document.querySelector("#screen");
@@ -11,15 +12,27 @@ btns.forEach( (button) => {
 	button.addEventListener("click", () => {
 		let selection = button.textContent;
 
-		if ((!isNaN(selection)) || (selection == ".")) {
+		if (!isNaN(selection)) {
 
 			if (flag_new) {
+				flag_dec = false;
 				flag_new = false;
 				eq_count = 0;
 				temp_num = selection;
 			} else {
 				temp_num += selection;
 			}
+
+		} else if (selection == ".") {
+
+			if (flag_new) {
+				flag_new = false;
+				eq_count = 0;
+				temp_num = "0.";
+			} else if (!flag_dec) {
+				temp_num += selection;
+			}
+			flag_dec = true;
 
 		} else if (selection == "CLEAR") {
 
