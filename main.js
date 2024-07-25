@@ -1,29 +1,31 @@
 var two_nums = [];
-var operator = '';
-var temp_num = '';		// temporary placeholder for number
+var operator = "";
+var temp_num = "";		// temporary placeholder for number
 var flag_new = true;	// flags beginning of new number
+var eq_count = 0;			// consecutive "=" button clicks
 
-const btns = document.querySelectorAll('button')
-const screen = document.querySelector('#screen');
+const btns = document.querySelectorAll("button")
+const screen = document.querySelector("#screen");
 
 btns.forEach( (button) => {
-	button.addEventListener('click', () => {
+	button.addEventListener("click", () => {
 		let selection = button.textContent;
 
-		if ((!isNaN(selection)) || (selection == '.')) {
+		if ((!isNaN(selection)) || (selection == ".")) {
 
 			if (flag_new) {
 				flag_new = false;
+				eq_count = 0;
 				temp_num = selection;
 			} else {
 				temp_num += selection;
 			}
 
-		} else if (selection == 'CLEAR') {
+		} else if (selection == "CLEAR") {
 
 			two_nums = [];
-			operator = '';
-			temp_num = '';
+			operator = "";
+			temp_num = "";
 			flag_new = false;
 
 		} else {
@@ -35,8 +37,38 @@ btns.forEach( (button) => {
 			if (two_nums.length === 2) {
 				// Get result using previously saved operator
 				temp_num = operate(parseInt(two_nums[0]), operator, parseInt(two_nums[1]));
+				if (isNaN(temp_num) && two_nums[1] == 0) {
+					window.alert("Is your divisor the number of friends you haveɀ̣");
+					window.alert("...or maybe your current working brain cells?");
+					window.alert("Go to sleep, take a break, hydrate or something.");
+				}
+
 				two_nums.shift();
 				two_nums[0] = `${temp_num}`;
+			} else if (operator == "=") {
+				eq_count += 1;
+				switch (eq_count) {
+					case 1:
+						temp_num = `${temp_num} = ${temp_num}`
+						break;
+					case 2:
+						window.alert("Try clicking equals again.");
+						break;
+					case 3:
+						window.alert("Aren't you obedient?");
+						break;
+					case 4:
+						window.alert("IT'S NOT GOING TO CHANGE‽");
+						break;
+					case 5:
+						window.alert("ya know what");
+						temp_num = 80085;
+						break;
+					default:
+						break;
+				}
+
+
 			}
 
 			flag_new = true;
@@ -49,26 +81,18 @@ btns.forEach( (button) => {
 });
 
 function operate(a, operator, b) {
-	let res;
-
 	switch (operator) {
-		case '+':
-			res = add(a, b);
-			break;
-		case '-':
-			res = subtract(a, b);
-			break;
-		case '*':
-			res = multiply(a, b);
-			break;
-		case '/':
-			res = divide(a, b);
-			break;
+		case "+":
+			return add(a, b);
+		case "-":
+			return subtract(a, b);
+		case "*":
+			return multiply(a, b);
+		case "/":
+			return divide(a, b);
 		default:
-			res = 0;
-			break;
+			return 0;
 	}
-	return res;
 }
 
 const add = function (a, b) {
@@ -84,7 +108,7 @@ const multiply = function (a, b) {
 };
 
 const divide = function (a, b) {
-	if (b === 0) return 'UNDEFINED';
+	if (b === 0) return "UNDEFINED";
 	return a / b;
 };
 
