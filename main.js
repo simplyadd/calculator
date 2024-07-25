@@ -49,7 +49,7 @@ btns.forEach( (button) => {
 				eq_count += 1;
 				switch (eq_count) {
 					case 1:
-						temp_num = `${temp_num} = ${temp_num}`
+						temp_num = `${two_nums[0]} = ${two_nums[0]}`
 						break;
 					case 2:
 						window.alert("Try clicking equals again.");
@@ -65,6 +65,8 @@ btns.forEach( (button) => {
 						temp_num = 80085;
 						break;
 					default:
+						temp_num = 800845;
+						eq_count = 0;
 						break;
 				}
 
