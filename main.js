@@ -37,11 +37,12 @@ btns.forEach( (button) => {
 
 			if (two_nums.length === 2) {
 				// Get result using previously saved operator
-				temp_num = operate(parseInt(two_nums[0]), operator, parseInt(two_nums[1]));
+				temp_num = operate(parseFloat(two_nums[0]), operator, parseFloat(two_nums[1]));
+				temp_num = (Number.isInteger(temp_num)) ? temp_num : temp_num.toFixed(2);
 				two_nums.shift();
 				two_nums[0] = `${temp_num}`;
 
-			} else if (operator == "=") {
+			} else if ((operator == "=") && (selection == "=")) {
 				eq_count += 1;
 				snark_attack(eq_count);
 			}
