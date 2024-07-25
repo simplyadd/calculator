@@ -1,54 +1,50 @@
 var two_nums = [];
 var operator = '';
-var temp_num = '';	// Temporary placeholder for number
+var temp_num = '';		// temporary placeholder for number
+var flag_new = true;	// flags beginning of new number
 
 const btns = document.querySelectorAll('button')
 const screen = document.querySelector('#screen');
-const result = document.querySelector('#result');
-const history = document.querySelector('#history');
-// var equation = document.createElement('p');
 
 btns.forEach( (button) => {
 	button.addEventListener('click', () => {
 		let selection = button.textContent;
 
-		if (!isNaN(selection)) {
-			temp_num += selection;	// Concat string
+		if ((!isNaN(selection)) || (selection == '.')) {
 
-			if (operator == '=') {
-				operator = '';
-				screen.textContent = selection;
+			if (flag_new) {
+				flag_new = false;
+				temp_num = selection;
 			} else {
-				screen.textContent += selection;
+				temp_num += selection;
 			}
+
 		} else if (selection == 'CLEAR') {
+
 			two_nums = [];
 			operator = '';
 			temp_num = '';
-			screen.textContent = temp_num;
-			result.textContent = temp_num;
-			history.textContent = temp_num;
+			flag_new = false;
+
 		} else {
-			if (temp_num != '') two_nums.push(temp_num);	// Save number
-			screen.textContent += ` ${selection} `; // Display operator
+
+			if (!flag_new) {
+				two_nums.push(temp_num);	// Save number
+			}
 
 			if (two_nums.length === 2) {
-				// Get and print result using previously saved operator
+				// Get result using previously saved operator
 				temp_num = operate(parseInt(two_nums[0]), operator, parseInt(two_nums[1]));
-				result.textContent = temp_num;
-
 				two_nums.shift();
 				two_nums[0] = `${temp_num}`;
 			}
 
+			flag_new = true;
 			operator = selection;	// Save new operator for use later
-			if (operator == '=') {
-				screen.textContent += two_nums[0];
-				result.textContent = '';
-			}
 
-			temp_num = '';	// Clear for the next number
 		}
+
+		screen.textContent = temp_num;
 	});
 });
 
