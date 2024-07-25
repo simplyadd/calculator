@@ -17,7 +17,8 @@ body {
 button {
   border-color: #6C5736;
   font-size: 2em;
-  min-width: 15vw;
+  height: 75px;
+  width: 75px;
 }
 
 div {
@@ -39,12 +40,12 @@ button, .header {
   background: #152617;
   text-align: right;
   margin: 7vh auto 0;
-  padding: 1vh 3vw;
+  padding: 20px;
 
   min-height: 7vh;
-  width: 54vw;
+  width: 260px;
 }
 
 #clr_btn {
-  width: 60vw;
+  width: 300px;
 }
